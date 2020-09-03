@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="author" content="Joel Strasser (joestr)"/>
+		<meta name="description" content="A quick informational post about the configuration of this Apache Archiva instance."/>
+		<meta name="keywords" content="Maven, repository, Apache, Archiva, Apache Archiva"/>
+		<title>joestr's blog</title>
+	</head>
+	<body>
+		<h1>joestr's blog</h1>
+		<hr>
+		<nav>
+			<a href="../index.html">Home</a>
+		</nav>
+		<hr/>
+		<h2>Maven repository</h2>
+		<i>by <a href="mailto:email@joestr.priv.at">Joel Strasser (joestr)</a> on 2019-09-30T06:35Z</i>
+		<p>
+			Hi,<br/>
+			<br/>
+			I just want to write down the magic behind my maven proxy.<br/>
+			<br/>
+			There are two separate repositories:<br/>
+			<br/>
+			https://mvn-repo.joestr.at/repository/releases/<br/>
+			<br/>
+			for releases, and<br/>
+			<br/>
+			https://mvn-repo.joestr.at/repository/snapshots/<br/>
+			<br/>
+			for snapshots.<br/>
+			<br/>
+			Following list applies to the proxied repositories. (DL = denylist, AL = allowlist)<br/>
+<pre>
+==================================================
+
+https://oss.sonatype.org/content/repositories/snapshots
+https://repo.maven.apache.org/maven2
+DL: co/aikar/**
+    com/destroystokio/**
+    com/mojang/**
+    com/sk89q/**
+    com/vexsoftware/** 
+    io/papermc/**
+    net/alpenblock/BungeePerms/**
+    net/coreprotect/**
+    net/md-5/**
+    org/bstats/**
+    org/bukkit/**
+    org/enginehub/**
+    org/spigotmc/**
+    us/dynmap/**
+
+https://libraries.minecraft.net
+AL: com/mojang/**
+
+https://hub.spigotmc.org/nexus/content/groups/public
+AL: org/bukkit/**
+    org/spigotmc/**
+    net/md-5/**
+
+https://papermc.io/repo/repository/maven-public
+AL: com/destroystokio/**
+    io/papermc/**
+
+https://repo.aikar.co/nexus/content/groups/aikar
+AL: co/aikar/**
+
+https://repo.codemc.org/repository/maven-public
+AL: org/bstats/**
+
+https://repo.wea-ondara.net/repository/public
+AL: net/alpenblock/BungeePerms/**
+
+https://maven.playpro.com
+AL: net/coreprotect/**
+
+http://repo.mikeprimm.com
+AL: us/dynmap/**
+
+https://dl.bintray.com/nuvotifier/maven
+AL: com/vexsoftware/**
+
+http://maven.sk89q.com/artifactory/repo
+AL: com/sk89q/**
+    org/enginehub/**
+
+==================================================
+</pre>
+		</p>
+		<hr/>
+		<a href="../legal/index.html">Imprint &amp; Privacy Policy</a>
+	</body>
+</html>
