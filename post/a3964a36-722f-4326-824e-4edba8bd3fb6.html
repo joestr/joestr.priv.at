@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="author" content="Joel Strasser (joestr)"/>
+		<meta name="description" content="God-forsaken Docker and RTFM!"/>
+		<meta name="keywords" content="docker, struggling, bitwarden, debian, docker-compose, error, HTTP 502, nginx, mssql, unhealthy"/>
+		<title>joestr's blog</title>
+	</head>
+	<body>
+		<h1>joestr's blog</h1>
+		<hr>
+		<nav>
+			<a href="../index.html">Home</a>
+		</nav>
+		<hr/>
+		<h2>God-forsaken Docker and RTFM!</h2>
+		<i>by <a href="../author/a2998e80-98aa-433c-b8bd-a6dd2fa4465e.html">Joel Strasser (joestr)</a> on 2019-12-31T21:09Z</i>
+		<p>
+			Greetings,<br/>
+            <br/>
+            Solving an unforeseen problem is especially nerve-wracking if you work on your gate to the internet (kind of).<br/>
+            <br/>
+            On my weekly SSH round-trip to my servers, where I update system and software (mostly guided, I only intervene on errors)<br/>
+            I updated my self-hosted <a href="https://www.bitwarden.com">Bitwarden</a> instance. this is where the problem begins.<br/>
+            <br>
+            Unknowingly at this point, I successfully set my be-loved password manager offline due to an oversight from my side.<br/>
+			<br/>
+            So the days pass and nothing happens. I can still log-on to websites, my <abbr title="Time-based One-Time Password">TOTP</abbr>s work just fine.<br/>
+			<br/>
+            Today I noticed that I cannot log on to my Bitwarden server on a new device. Weird.<br/>
+			<br/>
+            The browser extension seemed fine so I suspected it was server and yeah, a beautiful <code>502 Bad Gateway</code>, but<br/>
+            the error was coming from the nginx provided by Bitwarden, since I use an Apache HTTP daemon for proxying, so on to fixing the error.<br/>
+			<br/>
+            Maybe a Bitwarden update would help? No.<br/>
+			<br/>
+            System update? Try again.<br/>
+			<br/>
+            Ok. Let's ask the mighty problem solver ... Google.<br/>
+            (Fast-forward an hour: nothing described my situation.)<br/>
+			<br/>
+            Fine, time to list docker processes with <code>docker ps</code>. And there you find the culprit some containers were in an unhealthy.<br/>
+            After consulting the Bitwarden manual I verified that at least the mssql container was fine.<br/>
+            Shortly after, I nailed down the culprit to be the admin container not connecting to the mssql server.<br/>
+			<br/>
+            After another system update and a reboot, the problem persisted.<br/>
+			<br/>
+            On to the manual again.<br/>
+			<br/>
+            And then there it was. Docker.<br/>
+            Turns out the Docker installation was <i>slightly</i> out of date (if you agree that one major version is <i>slightly</i>)<br/>
+			<br/>
+            So installing the newest Docker version from the Docker repo directly (not Debian), rebuilding Bitwarden and my<br/>
+            sacred blue angel came back to life.<br/>
+			<br/>
+            Lessons learned:
+            <ul>
+                <li>Now your tech stack (<em>I thought I had the latest Docker version installed</em>)</li>
+                <li>Read the fucking manual (<em>for real</em>)</li>
+                <li>For the love of god, please use Ubuntu on your server (<em>if you are not insane, if you are, then welcome on board!</em>)</li>
+            </ul>
+			<br/>
+            Joel
+		</p>	
+		<hr/>
+		<a href="../legal/index.html">Imprint &amp; Privacy Policy</a>
+	</body>
+</html>
