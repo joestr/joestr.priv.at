@@ -19,25 +19,41 @@
 		<hr/>
 		<h2>Joel Strasser (joestr)</h2>
 		<p>
-	     	Age: 24<br/>
-	      	Nationality: Austria<br/>
-	      	Email: <a href="mailto:email@joestr.priv.at">email@joestr.priv.at</a><br/>
-	      	Email: <a href="mailto:strasser999@gmail.com">strasser999@gmail.com</a><br/>
-		Email: <a href="mailto:joelstrasser1@gmail.com">joelstrasser1@gmail.com</a> - <i>Preferred</i><br/>
-		Email: <a href="mailto:strasser999recycle@gmail.com">strasser999recycle@gmail.com</a><br/>
-		Email: <a href="mailto:strasser999backup@gmail.com">strasser999backup@gmail.com</a><br/>
-		Email: <a href="mailto:joel.strasser@drei.at">joel.strasser@drei.at</a><br/>
-		Email: <a href="mailto:joelstrasser@hotmail.com">joelstrasser@hotmail.com</a><br/>
-	      	Twitter: <a href="https://twitter.com/joestr_" target="_blank">joestr_</a><br/>
-	      	GitHub: <a href="https://github.com/joestr" target="_blank">joestr</a><br/>
-	      	Reddit: <a href="https://www.reddit.com/user/joestr_" target="_blank">joestr_</a><br/>
-	      	ListenBrainz: <a href="https://listenbrainz.org/user/joestr" target="_blank">joestr</a><br/>
-		Linktree: <a href="https://linktr.ee/joestr" target="_blank">joestr</a><br/>
-		Keybase: <a href="https://keybase.io/joestr" target="_blank">joestr</a><br/>
-		OpenPGP public key #1: <a href="https://files.joestr.priv.at/pgp_keys/ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9.asc" target="_blank">ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9</a><br/>
-      	OpenPGP public key #2: <a href="https://keybase.io/joestr/pgp_keys.asc?fingerprint=ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9" target="_blank">ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9</a><br/>
-		SSH public keys: <a href="https://files.joestr.priv.at/ssh_keys/authorized_keys.txt" target="_blank">authorized_keys</a>
-	</p>
+			Age: 24<br/>
+			Nationality: Austria<br/>
+			Email: <a href="mailto:email@joestr.priv.at">email@joestr.priv.at</a><br/>
+			Email: <a href="mailto:strasser999@gmail.com">strasser999@gmail.com</a><br/>
+			Email: <a href="mailto:joelstrasser1@gmail.com">joelstrasser1@gmail.com</a> - <i>Preferred</i><br/>
+			Email: <a href="mailto:strasser999recycle@gmail.com">strasser999recycle@gmail.com</a><br/>
+			Email: <a href="mailto:strasser999backup@gmail.com">strasser999backup@gmail.com</a><br/>
+			Email: <a href="mailto:joel.strasser@drei.at">joel.strasser@drei.at</a><br/>
+			Email: <a href="mailto:joelstrasser@hotmail.com">joelstrasser@hotmail.com</a><br/>
+			Twitter: <a href="https://twitter.com/joestr_" target="_blank">joestr_</a><br/>
+			GitHub: <a href="https://github.com/joestr" target="_blank">joestr</a><br/>
+			Reddit: <a href="https://www.reddit.com/user/joestr_" target="_blank">joestr_</a><br/>
+			ListenBrainz: <a href="https://listenbrainz.org/user/joestr" target="_blank">joestr</a><br/>
+			Linktree: <a href="https://linktr.ee/joestr" target="_blank">joestr</a><br/>
+			Keybase: <a href="https://keybase.io/joestr" target="_blank">joestr</a><br/>
+			OpenPGP public key #1: <a href="https://files.joestr.priv.at/pgp_keys/ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9.asc" target="_blank">ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9</a><br/>
+			OpenPGP public key #2: <a href="https://keybase.io/joestr/pgp_keys.asc?fingerprint=ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9" target="_blank">ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9</a><br/>
+			SSH public keys: <a href="https://files.joestr.priv.at/ssh_keys/authorized_keys.txt" target="_blank">authorized_keys</a> (<a href="https://files.joestr.priv.at/ssh_keys/authorized_keys.txt.sig" target="_blank">Signature</a>)
+		</p>
+		<h3>Importing PGP key</h3>
+		<p>
+			<pre>gpg --recv-keys ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9</pre><br/>
+			or<br/>
+			<pre>curl https://files.joestr.priv.at/pgp_keys/ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9.asc --remote-name</pre><br/>
+			<pre>gpg --import ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9.asc</pre><br/>
+			<pre>rm ca06231b60cc3ae35295b6d5e00e0d8f9ab343c9.asc</pre>
+		</p>
+		<h3>Importing SSH keys</h3>
+		<p>
+			<pre>curl https://files.joestr.priv.at/ssh_keys/authorized_keys.txt --remote-name</pre><br/>
+			<pre>curl https://files.joestr.priv.at/ssh_keys/authorized_keys.txt.sig --remote-name</pre><br/>
+			<pre>gpg --verify authorized_keys.txt.sig authorized_keys.txt</pre><br/>
+			<pre>mv authorized_keys.txt .ssh/authorized_keys</pre><br/>
+			<pre>rm authorized_keys.txt.sig</pre>
+		</p>
     <hr/>
 		<a href="../legal/index.html">Imprint &amp; Privacy Policy</a>
 	</body>
