@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Storing information in an encrypted string." />
+    <meta name="keywords" content="server, infrastructure" />
+    <meta name="author" content="Joel Strasser">
+    <link rel="stylesheet" href="../../../assets/stylesheets/water.css">
+    <link rel="stylesheet" href="../../../assets/stylesheets/custom.css">
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <title>Joel — Enkapsulate your data!</title>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Joel</h1>
+        </header>
+        <hr/>
+        <nav>
+            <a href="../../../index.html">Home</a> — <a href="../../index.html">Blog</a> — <a href="https://files.joestr.priv.at/" target="_blank" rel="noopener">Files 🗃️</a>
+        </nav>
+        <hr/>
+        <section>
+            <h2>Enkapsulate your data!</h2>
+            <i>by <a href="../../author/joestr/index.html">Joel Strasser</a> on 2024-01-06T16:59Z</i>
+            <p>
+                Hi all!<br />
+                <br />
+                A new year has started! Time to tackle new problems.<br />
+                <br />
+                Last year I pushed the first commit onto my <a href="https://github.com/joestr/enka" target="_blank" rel="noopener">enka
+                    repository</a>.<br />
+                <br />
+                Altough it first started as some form of experimenting with the <a href="https://go.dev" target="_blank" rel="noopener">GO
+                    programming language</a>,
+                it became sort-of well integrated into my workflow of dealing with encrypted data.<br />
+                There were and are many use-cases I had to store an encrypted secret value in a readable format.
+                But this is not an easy task if you only have information about the encrypted data. Information such as the
+                algorithm,
+                key derivation function and intialization vector are not encoded in an OpenSSL string for example.<br />
+                <br />
+                So what <i>enka</i> does is to encode these missing parameters into a format which resembles <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank" rel="noopener">bcrypt</a>.<br />
+                <br />
+                One plan this year to improve <i>enka</i> into a versataile tool to work with multiple encryption concepts.<br />
+                <br />
+                That's all for now and have a nice day,<br />
+                <br />
+                Joel
+            </p>
+        </section>
+    </main>
+    <footer>
+        Copyright ⓒ 2019 - 2025 Joel Strasser — <a href="../../../legal/index.html">Legal</a> — <a href="../../../sitemap.xml">Sitemap</a>
+    </footer>
+</body>
+</html>

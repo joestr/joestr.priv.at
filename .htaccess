@@ -1,0 +1,12 @@
+RewriteEngine On
+Redirect 301 /author/a2998e80-98aa-433c-b8bd-a6dd2fa4465e.html /blog/author/joestr/index.html
+Redirect 301 /post/94acaf84-2b6c-4867-bd5c-47183e8b1bb2.html /blog/post/enkapsulate-your-data/index.html
+Redirect 301 /post/220ff764-d6d1-462b-9e3b-90caf931623a.html /blog/post/2019-is-over-and-2020-is-approaching/index.html
+Redirect 301 /post/580c95cd-6976-4608-be3e-59a630cbb381.html /blog/post/infrastructure-domains-explained/index.html
+Redirect 301 /post/902ba753-1b0b-4ced-85a6-25acd8b571fd.html /blog/post/maven-reposiroty/index.html
+Redirect 301 /post/a3964a36-722f-4326-824e-4edba8bd3fb6.html /blog/post/god-forsaken-docker-and-rtfm/index.html
+Redirect 301 /post/c4c16f18-7bcd-4b7a-8050-eda990a69c69.html /blog/post/welcome-to-my-blog/index.html
+Redirect 301 /post/cba154ed-9562-4fde-93e3-9c0fd0395a43.html /blog/post/sign-up-sign-in-via-github/index.html
+Redirect 301 /post/d031e736-0eca-49ef-80b5-bfaaf0604191.html /blog/post/restructuring-nearly-complete/index.html
+Redirect 301 /post/ef8209a9-fe0b-4700-9579-bc670841ae14.html /blog/post/2020-in-revision/index.html
+Redirect 301 /post/f22e0ac2-d082-4dc2-b64f-b34c71f44ce9.html /blog/post/restructuring-infrastructure/index.html
