@@ -29,7 +29,7 @@
             <h2>AI Dashboard</h2>
             <p>
                 <div id="deepseek-card" class="aidash-card">
-                    <h3 id="deepseek-card-name">DeepSeek</span>
+                    <h3 id="deepseek-card-name">DeepSeek</h3>
                     <span>Available:</span><span id="deepseek-card-availability">…</span>
                     <span>Balance:</span><span id="deepseek-card-balance">…</span>
                 </div>
@@ -40,7 +40,7 @@
         Copyright © 2019--2026 Joel Strasser — <a href="../legal/index.html">Legal</a> — <a href="../sitemap.xml">Sitemap</a>
     </footer>
     <script type="text/javascript">
-        (async function () {
+        async function loadDeepSeek() {
             const card = document.getElementById('deepseek-card');
             const availability = document.getElementById('deepseek-card-availability');
             const balance = document.getElementById('deepseek-card-balance');
@@ -72,7 +72,11 @@
                 balance.textContent = '—';
                 setState(false);
             }
-        })();
+        }
+
+        document.addEventListener("DOMContentLoaded", (event) => { 
+            loadDeepSeek();
+        });
     </script>
 </body>
 </html>
