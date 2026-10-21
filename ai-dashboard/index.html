@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A little AI dashboard to get an overview of the utilisation, current usage, and balance.">
+    <meta name="keywords" content="Joel, homepage, personal website, Joel Strasser, AI, artifical intelligence, dashboard">
+    <meta name="author" content="Joel Strasser">
+    <link rel="stylesheet" href="../assets/stylesheets/water.css">
+    <link rel="stylesheet" href="../assets/stylesheets/custom.css">
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <title>Joel — Home</title>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Joel</h1>
+        </header>
+        <hr/>
+        <nav>
+            <a href="./index.html">Home</a> — <a href="../blog/index.html">Blog</a> — AI Dashboard — <a href="https://files.joestr.priv.at/" target="_blank" rel="noopener">Files 🗃️</a>
+        </nav>
+        <hr/>
+        <section>
+            <h2>AI Dashboard</h2>
+            <p>
+                <div id="deepseek-card" class="aidash-card">
+                    <h3 id="deepseek-card-name">DeepSeek</span>
+                    <span>Available:</span><span id="deepseek-card-availability">…</span>
+                    <span>Balance:</span><span id="deepseek-card-balance">…</span>
+                </div>
+            </p>
+        </section>
+    </main>
+    <footer>
+        Copyright ⓒ 2019 - 2025 Joel Strasser — <a href="../legal/index.html">Legal</a> — <a href="../sitemap.xml">Sitemap</a>
+    </footer>
+    <script type="text/javascript">
+        (async function () {
+            const card = document.getElementById('deepseek-card');
+            const availability = document.getElementById('deepseek-card-availability');
+            const balance = document.getElementById('deepseek-card-balance');
+
+            const setState = (ok) => {
+                card.classList.remove('aidash-card-green', 'aidash-card-red');
+                card.classList.add(ok ? 'aidash-card-green' : 'aidash-card-red');
+            };
+
+            try {
+                const response = await fetch('/api/deepseek-balance.php');
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+
+                const data = await response.json();
+                if (typeof data.is_available !== 'boolean' ||
+                    !Array.isArray(data.balance_infos) ||
+                    data.balance_infos.length === 0) {
+                    throw new Error('Unexpected response shape');
+                }
+
+                const info = data.balance_infos[0];
+                availability.textContent = data.is_available ? 'Yes' : 'No';
+                balance.textContent = info.total_balance + ' ' + info.currency;
+                setState(true);
+            } catch (err) {
+                availability.textContent = 'Error';
+                balance.textContent = '—';
+                setState(false);
+            }
+        })();
+    </script>
+</body>
+</html>

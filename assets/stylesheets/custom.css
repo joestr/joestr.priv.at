@@ -14,3 +14,21 @@
 .flexcolumnscolumnpadding {
     padding-left: 2em;
 }
+
+.aidash-card {
+    border-color: gray;
+    border-style: solid;
+    border-width: 3px;
+}
+
+.aidash-card-green {
+    border-color: green;
+    border-style: solid;
+    border-width: 3px;
+}
+
+.aidash-card-red {
+    border-color: red;
+    border-style: solid;
+    border-width: 3px;
+}
