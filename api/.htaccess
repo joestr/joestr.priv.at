@@ -1,2 +1,0 @@
-RewriteEngine On
-RewriteRule ^config\.php$ - [R=404,L]

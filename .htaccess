@@ -1,6 +1,5 @@
-RewriteEngine On
-RewriteRule ^(.*/)?\.git+ - [R=404,L]
-
+RedirectMatch 404 /\.git
+RedirectMatch 404 /api/config.php
 Redirect 301 /author/a2998e80-98aa-433c-b8bd-a6dd2fa4465e.html /blog/author/joestr/index.html
 Redirect 301 /post/94acaf84-2b6c-4867-bd5c-47183e8b1bb2.html /blog/post/enkapsulate-your-data/index.html
 Redirect 301 /post/220ff764-d6d1-462b-9e3b-90caf931623a.html /blog/post/2019-is-over-and-2020-is-approaching/index.html
