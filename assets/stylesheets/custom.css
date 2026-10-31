@@ -35,3 +35,9 @@
     border-width: 3px;
     padding: 6px;
 }
+
+.abuseipdb-banner {
+  height: 60px;
+  width: 240px;
+  background-color: white;
+}
