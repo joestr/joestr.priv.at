@@ -41,3 +41,84 @@
   width: 240px;
   background-color: white;
 }
+
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.kanban-meta,
+.kanban-error {
+    font-size: 0.85em;
+    color: #666;
+}
+
+.kanban-error {
+    color: #c00;
+}
+
+.kanban-column {
+    flex: 1 1 0;
+    min-width: 240px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.kanban-column-title {
+    margin-top: 0;
+}
+
+.kanban-card {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.kanban-card-title {
+    margin: 0 0 4px;
+}
+
+.kanban-card-desc {
+    white-space: pre-line;
+    margin: 0 0 8px;
+    font-size: 0.9em;
+}
+
+.kanban-labels {
+    margin-bottom: 6px;
+}
+
+.kanban-label {
+    display: inline-block;
+    border: 1px solid #999;
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 0.8em;
+    margin-right: 4px;
+}
+
+.kanban-label-filled {
+    border-color: transparent;
+    color: #fff;
+}
+
+.kanban-due {
+    display: block;
+    font-size: 0.85em;
+}
+
+.kanban-due-overdue {
+    color: #c00;
+    font-weight: bold;
+}
+
+.kanban-empty {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+}
