@@ -56,7 +56,9 @@ function deck_get(string $baseUrl, string $user, string $password, string $path)
 
     $metaStatus = (int) ($decoded['ocs']['meta']['statuscode'] ?? 0);
     if ($status !== 200 || $metaStatus !== 200) {
-        throw new RuntimeException('Nextcloud API error: HTTP ' . $status . ', OCS ' . $metaStatus);
+        throw new RuntimeException(
+            'Nextcloud API error: HTTP ' . $status . ', OCS ' . $metaStatus . ' for GET ' . $path
+        );
     }
 
     return $decoded['ocs']['data'];
@@ -71,6 +73,31 @@ function has_public_tag(array $labels, string $publicTag): bool
         }
     }
     return false;
+}
+
+/** Map a raw Deck card to the slim public representation, or null if it must be filtered out. */
+function map_public_card(array $card, string $publicTag): ?array
+{
+    if (!empty($card['archived'])) {
+        return null;
+    }
+
+    $labels = $card['labels'] ?? [];
+    if (!is_array($labels) || !has_public_tag($labels, $publicTag)) {
+        return null;
+    }
+
+    return [
+        'id' => (int) $card['id'],
+        'title' => (string) ($card['title'] ?? ''),
+        'description' => (string) ($card['description'] ?? ''),
+        'duedate' => $card['duedate'] ?? null,
+        'order' => (int) ($card['order'] ?? 0),
+        // Keep the other labels (the public tag itself is redundant on the page).
+        'labels' => array_values(array_filter($labels, static function ($label) use ($publicTag): bool {
+            return is_array($label) && strcasecmp(trim((string) ($label['title'] ?? '')), $publicTag) !== 0;
+        })),
+    ];
 }
 
 $config = require __DIR__ . '/config.php';
@@ -103,71 +130,69 @@ if (is_file($cacheFile) && (time() - filemtime($cacheFile)) < CACHE_TTL) {
     exit;
 }
 
+$apiBase = '/ocs/v2.php/apps/deck/api/v1.0/';
+
 try {
+    // Deck >= 1.13 returns the stacks of a board with their cards embedded.
     $stacks = deck_get(
         $baseUrl,
         $user,
         $password,
-        '/ocs/v2.php/apps/deck/api/v1.0/boards/' . rawurlencode($boardId) . '/stacks'
+        $apiBase . 'stacks/' . rawurlencode($boardId)
     );
+} catch (RuntimeException $e) {
+    if (strpos($e->getMessage(), 'HTTP 404') === false) {
+        fail(502, $e->getMessage());
+    }
+    // A 404 means either a wrong board id or an unreachable Deck API.
+    // Probe the board list to tell the two apart.
+    try {
+        deck_get($baseUrl, $user, $password, $apiBase . 'boards');
+        fail(502, 'Deck board "' . $boardId . '" was not found on ' . $baseUrl
+            . '. Check deck_board_id in config.php.');
+    } catch (RuntimeException $probeError) {
+        fail(502, 'Deck API is not reachable: ' . $probeError->getMessage()
+            . '. Is the Deck app installed and enabled?');
+    }
+}
 
-    $result = [
-        'board' => $boardId,
-        'generated_at' => gmdate('c'),
-        'stacks' => [],
-    ];
+$result = [
+    'board' => $boardId,
+    'generated_at' => gmdate('c'),
+    'stacks' => [],
+];
 
-    foreach ($stacks as $stack) {
-        if (!is_array($stack)) {
-            continue;
-        }
-
-        $stackId = (int) $stack['id'];
-        $cards = deck_get(
-            $baseUrl,
-            $user,
-            $password,
-            '/ocs/v2.php/apps/deck/api/v1.0/boards/' . rawurlencode($boardId)
-                . '/stacks/' . $stackId . '/cards'
-        );
-
-        $publicCards = [];
-        foreach ($cards as $card) {
-            if (!is_array($card) || !empty($card['archived'])) {
-                continue;
-            }
-            $labels = $card['labels'] ?? [];
-            if (!is_array($labels) || !has_public_tag($labels, $publicTag)) {
-                continue;
-            }
-
-            // Keep the other labels (the public tag itself is redundant on the page).
-            $publicCards[] = [
-                'id' => (int) $card['id'],
-                'title' => (string) ($card['title'] ?? ''),
-                'description' => (string) ($card['description'] ?? ''),
-                'duedate' => $card['duedate'] ?? null,
-                'order' => (int) ($card['order'] ?? 0),
-                'labels' => array_values(array_filter($labels, static function ($label) use ($publicTag): bool {
-                    return is_array($label) && strcasecmp(trim((string) ($label['title'] ?? '')), $publicTag) !== 0;
-                })),
-            ];
-        }
-
-        usort($publicCards, static fn(array $a, array $b): int => $a['order'] <=> $b['order']);
-
-        $result['stacks'][] = [
-            'id' => $stackId,
-            'title' => (string) ($stack['title'] ?? ''),
-            'order' => (int) ($stack['order'] ?? 0),
-            'cards' => $publicCards,
-        ];
+foreach ($stacks as $stack) {
+    if (!is_array($stack)) {
+        continue;
     }
 
-    usort($result['stacks'], static fn(array $a, array $b): int => $a['order'] <=> $b['order']);
-} catch (RuntimeException $e) {
-    fail(502, $e->getMessage());
+    $stackId = (int) $stack['id'];
+    // Cards arrive embedded in the stacks response.
+    $cards = is_array($stack['cards'] ?? null) ? $stack['cards'] : [];
+
+    $publicCards = [];
+    foreach ($cards as $card) {
+        if (!is_array($card)) {
+            continue;
+        }
+        $mapped = map_public_card($card, $publicTag);
+        if ($mapped !== null) {
+            $publicCards[] = $mapped;
+        }
+    }
+
+    usort($publicCards, static fn(array $a, array $b): int => $a['order'] <=> $b['order']);
+
+    $result['stacks'][] = [
+        'id' => $stackId,
+        'title' => (string) ($stack['title'] ?? ''),
+        'order' => (int) ($stack['order'] ?? 0),
+        'cards' => $publicCards,
+    ];
 }
+
+usort($result['stacks'], static fn(array $a, array $b): int => $a['order'] <=> $b['order']);
 
 $json = json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 if ($json === false) {
