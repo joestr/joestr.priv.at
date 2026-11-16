@@ -56,6 +56,10 @@
     color: #666;
 }
 
+.kanban-meta {
+    margin-bottom: 8px;
+}
+
 .kanban-error {
     color: #c00;
 }

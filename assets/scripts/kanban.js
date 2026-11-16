@@ -82,6 +82,7 @@
   async function loadKanban() {
     const board = document.getElementById('kanban-board');
     const status = document.getElementById('kanban-status');
+    const meta = document.getElementById('kanban-meta');
 
     try {
       const response = await fetch('/api/kanbantasks.php');
@@ -98,8 +99,9 @@
         status.remove();
       }
 
-      if (data.generated_at && !isNaN(new Date(data.generated_at).getTime())) {
-        board.appendChild(el('p', 'kanban-meta', 'Last updated: ' + new Date(data.generated_at).toLocaleString()));
+      if (meta && data.generated_at && !isNaN(new Date(data.generated_at).getTime())) {
+        meta.textContent = 'Last updated: ' + new Date(data.generated_at).toLocaleString();
+        meta.hidden = false;
       }
 
       if (data.stacks.length === 0) {
@@ -111,6 +113,9 @@
         board.appendChild(renderColumn(stack));
       }
     } catch (err) {
+      if (meta) {
+        meta.hidden = true;
+      }
       if (status) {
         status.textContent = 'Could not load tasks (' + err.message + ').';
         status.classList.add('kanban-error');
