@@ -44,10 +44,8 @@
 
 .kanban-board {
     display: flex;
+    flex-direction: column;
     gap: 16px;
-    align-items: flex-start;
-    overflow-x: auto;
-    padding-bottom: 8px;
 }
 
 .kanban-meta,
@@ -65,8 +63,6 @@
 }
 
 .kanban-column {
-    flex: 1 1 0;
-    min-width: 240px;
     border: 1px solid #999;
     border-radius: 6px;
     padding: 10px;
